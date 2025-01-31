@@ -230,12 +230,6 @@
 
                                     <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">12
                                         Reportes</span>
-
-                                    <span class="badge badge-light-success fs-base">
-                                        <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>9.2%</span>
                                 </div>
                                 <span class="fs-6 fw-semibold text-gray-500">Grafica de
                                     reportes</span>

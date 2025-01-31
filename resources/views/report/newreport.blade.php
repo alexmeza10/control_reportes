@@ -86,6 +86,13 @@
                                         <option value="4">Cerrado</option>
                                     </select>
                                 </div>
+                                         <!--Ubication-->
+                                         <div class="col-md-6 fv-row">
+                                            <label class="required fs-6 fw-semibold mb-2">Ubicacion</label>
+                                            <input type="text" class="form-control form-control-solid"
+                                                placeholder="Ingresa la ubicacion de donde se atiende el reporte" name="ubicacion" />
+                                        </div>
+                                        <!--End Ubication-->
                             </div>
                             <!--End Status-->
                             <!-- titulo -->
@@ -127,7 +134,6 @@
                                 <label class="fs-6 fw-semibold mb-2">Evidencias</label>
                                 <form id="evidencias-upload" class="dropzone" action="/upload" method="post"
                                     enctype="multipart/form-data">
-                                    @csrf
                                     <div class="dz-message needsclick">
                                         <i class="ki-duotone ki-file-up fs-3hx text-primary">
                                             <span class="path1"></span>
@@ -154,7 +160,7 @@
                                 <div class="d-flex flex-stack">
                                     <div class="fw-semibold me-5">
                                         <label class="fs-6">Notificar</label>
-                                        <div class="fs-7 text-gray-500">¿Deseas notificar por correo al usuario?</div>
+                                        <div class="fs-7 text-gray-500">¿Deseas notificar por correo al usuario sobre su reporte?</div>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <label class="form-check form-check-custom form-check-solid me-10">
@@ -189,7 +195,7 @@
         </div>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
-                const form = document.querySelector("#kt_app_content_container .card-body");
+                const form = document.querySelector("#kt_app_content_container");
                 const submitButton = document.querySelector("#kt_modal_new_ticket_submit");
                 const cancelButton = document.querySelector("#kt_modal_new_ticket_cancel");
                 const emailField = document.getElementById("emailField");
@@ -264,6 +270,13 @@
                                 },
                             },
                         },
+                        ubicacion: {
+                            validators: {
+                                notEmpty: {
+                                    message: "Ingresa la ubicación donde se atiende el reporte",
+                                },
+                            },
+                        },
                         evidencias: {
                             validators: {
                                 callback: {
@@ -293,6 +306,61 @@
                     } else {
                         notificationSection.style.display = "none";
                     }
+                });
+
+                submitButton.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    validation.validate().then(function(status) {
+                        if (status === "Valid") {
+                            submitButton.setAttribute("data-kt-indicator", "on");
+                            submitButton.disabled = true;
+
+                            setTimeout(function() {
+                                submitButton.removeAttribute("data-kt-indicator");
+                                submitButton.disabled = false;
+                                Swal.fire({
+                                    text: "¡Formulario enviado con éxito!",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Entendido",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary",
+                                    },
+                                });
+                            }, 2000);
+                        } else {
+                            Swal.fire({
+                                text: "Por favor, revisa los errores en el formulario e inténtalo nuevamente.",
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Entendido",
+                                customClass: {
+                                    confirmButton: "btn btn-primary",
+                                },
+                            });
+                        }
+                    });
+                });
+
+                cancelButton.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        text: "¿Estás seguro de que deseas cancelar?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        buttonsStyling: false,
+                        confirmButtonText: "Sí, cancelar",
+                        cancelButtonText: "No, regresar",
+                        customClass: {
+                            confirmButton: "btn btn-primary",
+                            cancelButton: "btn btn-active-light",
+                        },
+                    }).then(function(result) {
+                        if (result.isConfirmed) {
+                            form.reset();
+                            notificationSection.style.display = "none";
+                        }
+                    });
                 });
             });
 
@@ -329,61 +397,6 @@
                         this.removeFile(file);
                     });
                 },
-            });
-
-            submitButton.addEventListener("click", function(e) {
-                e.preventDefault();
-                validation.validate().then(function(status) {
-                    if (status === "Valid") {
-                        submitButton.setAttribute("data-kt-indicator", "on");
-                        submitButton.disabled = true;
-
-                        setTimeout(function() {
-                            submitButton.removeAttribute("data-kt-indicator");
-                            submitButton.disabled = false;
-                            Swal.fire({
-                                text: "¡Formulario enviado con éxito!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Entendido",
-                                customClass: {
-                                    confirmButton: "btn btn-primary",
-                                },
-                            });
-                        }, 2000);
-                    } else {
-                        Swal.fire({
-                            text: "Por favor, revisa los errores en el formulario e inténtalo nuevamente.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Entendido",
-                            customClass: {
-                                confirmButton: "btn btn-primary",
-                            },
-                        });
-                    }
-                });
-            });
-
-            cancelButton.addEventListener("click", function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    text: "¿Estás seguro de que deseas cancelar?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Sí, cancelar",
-                    cancelButtonText: "No, regresar",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                        cancelButton: "btn btn-active-light",
-                    },
-                }).then(function(result) {
-                    if (result.isConfirmed) {
-                        form.reset();
-                        notificationSection.style.display = "none";
-                    }
-                });
             });
         </script>
 </body>
