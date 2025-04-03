@@ -10,7 +10,6 @@
     <link rel="shortcut icon" href="{{ asset('media/logos/favicon.png') }}" />
     <link href="{{ asset('plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-
 </head>
 
 <body id="kt_body" class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center">
