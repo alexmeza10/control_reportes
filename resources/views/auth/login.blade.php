@@ -60,35 +60,48 @@
                     <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
                         <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
                             <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
-                                data-kt-redirect-url="{{ route('menu') }}" action="#">
-                                <div class="text-center mb-11">
-                                    <img class="mx-auto mb-5" src="{{ asset('media/logos/logo_administracion.png') }}"
-                                        alt="Logo Administración" style="width: 180px; height: auto;" />
-                                    <h1 class="text-gray-900 fw-bolder mb-3">Inicio de sesión</h1>
-                                    <div class="text-gray-500 fw-semibold fs-6">
-                                        Sistema para el control de reportes en la unidad de redes y telecomunicaciones
-                                    </div>
+                            action="{{ url('/login') }}" method="POST">
+                            @csrf
+                        
+                            <div class="text-center mb-11">
+                                <img class="mx-auto mb-5" src="{{ asset('media/logos/logo_administracion.png') }}"
+                                    alt="Logo Administración" style="width: 180px; height: auto;" />
+                                <h1 class="text-gray-900 fw-bolder mb-3">Inicio de sesión</h1>
+                                <div class="text-gray-500 fw-semibold fs-6">
+                                    Sistema para el control de reportes en la unidad de redes y telecomunicaciones
                                 </div>
-                                <div class="fv-row mb-8">
-                                    <input type="text" placeholder="Usuario" name="user" autocomplete="off"
-                                        class="form-control bg-transparent" />
+                            </div>
+                        
+                            {{-- Mostrar errores de sesión --}}
+                            @if ($errors->any())
+                                <div class="mb-5 alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                                <div class="fv-row mb-3">
-                                    <input type="password" placeholder="Contraseña" name="password" autocomplete="off"
-                                        class="form-control bg-transparent" />
-                                </div>
-                                <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-
-                                </div>
-                                <div class="d-grid mb-10">
-                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
-                                        <span class="indicator-label">Iniciar sesion</span>
-                                        <span class="indicator-progress">Espera...
-                                            <span
-                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                    </button>
-                                </div>
-                            </form>
+                            @endif
+                        
+                            <div class="fv-row mb-8">
+                                <input type="text" placeholder="Usuario" name="usuario" autocomplete="off"
+                                    class="form-control bg-transparent" required />
+                            </div>
+                        
+                            <div class="fv-row mb-3">
+                                <input type="password" placeholder="Contraseña" name="password" autocomplete="off"
+                                    class="form-control bg-transparent" required />
+                            </div>
+                        
+                            <div class="d-grid mb-10">
+                                <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                                    <span class="indicator-label">Iniciar sesión</span>
+                                    <span class="indicator-progress">Espera...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                        </form>
+                        
                         </div>
                     </div>
                     <div

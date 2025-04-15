@@ -1,21 +1,48 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ReportController;
 
+/*
+|--------------------------------------------------------------------------
+| Rutas públicas (no requieren autenticación)
+|--------------------------------------------------------------------------
+*/
+
+// Login
 Route::get('/', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 
-Route::get('/menu', [DashboardController::class, 'index'])->name('menu');
+// Logout
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect()->route('login');
+})->name('logout');
 
-Route::get('/adminuser', [DashboardController::class, 'adminuser'])->name('profile.adminuser');
+/*
+|--------------------------------------------------------------------------
+| Rutas protegidas por autenticación
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/newreport', [DashboardController::class, 'newreport'])->name('report.newreport');
+Route::middleware('auth')->group(function () {
 
-Route::get('/adminreport', [DashboardController::class, 'adminreport'])->name('report.adminreport');
+    // Menú principal
+    Route::get('/menu', [DashboardController::class, 'index'])->name('menu');
 
-Route::get('/report', [ReportController::class, 'report'])->name('report.viewreport'); 
+    // Perfil de usuario
+    Route::get('/perfil', [DashboardController::class, 'adminuser'])->name('profile.adminuser');
+    Route::post('/update-password', [AuthController::class, 'updatePassword'])->name('password.update');
 
-Route::post('/upload-evidencias', [FileController::class, 'upload']);
+    // Administración de reportes
+    Route::get('/newreport', [DashboardController::class, 'newreport'])->name('report.newreport');
+    Route::get('/adminreport', [DashboardController::class, 'adminreport'])->name('report.adminreport');
+    Route::get('/report', [ReportController::class, 'report'])->name('report.viewreport');
+
+    // Subida de evidencias
+    Route::post('/upload-evidencias', [FileController::class, 'upload'])->name('files.upload');
+});

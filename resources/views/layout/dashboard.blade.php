@@ -148,6 +148,7 @@
                             </div>
                             <!--Profile menu-->
                             <div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
+                                <!-- Icono del usuario -->
                                 <div class="cursor-pointer symbol symbol-35px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                     data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -155,30 +156,56 @@
                                         alt="user" />
                                 </div>
 
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
+                                <!-- Menú desplegable -->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 
+                                            menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                                     data-kt-menu="true">
+
+                                    <!-- Info del usuario -->
                                     <div class="menu-item px-3">
                                         <div class="menu-content d-flex align-items-center px-3">
-                                            <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="{{ asset('media/avatars/blank.png') }}" />
+                                            <div class="symbol symbol-50px me-4">
+                                                <img alt="Avatar" src="{{ asset('media/avatars/blank.png') }}" />
                                             </div>
                                             <div class="d-flex flex-column">
-                                                <div class="fw-bold d-flex align-items-center fs-5">Jorel Alejandro
-                                                    Meza Hernández
+                                                <div class="fw-bold d-flex align-items-center fs-5">
+                                                    {{ Auth::user()->nombre }}
                                                     <span
-                                                        class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Admim</span>
+                                                        class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">
+                                                        {{ ucfirst(Auth::user()->rol) }}
+                                                    </span>
                                                 </div>
-                                                <a
-                                                    class="fw-semibold text-muted text-hover-primary fs-7">jorel.meza@zapopan.gob.mx</a>
+                                                <div class="fw-semibold text-muted fs-7">
+                                                    {{ Auth::user()->correo }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="menu-item px-5 my-1">
-                                        <a href="{{ route('profile.adminuser') }}"
-                                            class="menu-link px-5">Configuracion</a>
-                                    </div>
+
+                                    <!-- Separador -->
+                                    <div class="separator my-2"></div>
+
+                                    <!-- Configuración -->
                                     <div class="menu-item px-5">
-                                        <a href="{{ route('login') }}" class="menu-link px-5">Salir</a>
+                                        <a href="{{ route('profile.adminuser') }}"
+                                            class="menu-link w-100 text-start border-0 bg-transparent p-0">
+                                            <span class="menu-title">Configuración</span>
+                                        </a>
+                                    </div>
+
+                                    <!-- Separador -->
+                                    <div class="separator my-2"></div>
+
+
+                                    <!-- Logout -->
+                                    <div class="menu-item px-5">
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit"
+                                                class="menu-link w-100 text-start border-0 bg-transparent p-0">
+                                                <span class="menu-title">Salir</span>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -328,6 +355,8 @@
     <script src="{{ asset('js/custom/utilities/modals/new-address.js') }}"></script>
     <script src="{{ asset('js/custom/utilities/modals/users-search.js') }}"></script>
     <script src="{{ asset('js/custom/apps/support-center/tickets/create.js') }}"></script>
+    <script src="{{ asset('js/custom/authentication/reset-password/reset-password.js') }}"></script>
+    <script src="{{ asset('js/custom/authentication/reset-password/new-password.js') }}"></script>
 
 </body>
 
