@@ -18,7 +18,8 @@
         "laraveles/spanish": "^1.5",
         "league/flysystem-aws-s3-v3": "3.0",
         "nativephp/electron": "^0.9.0",
-        "realrashid/sweet-alert": "^7.3"
+        "realrashid/sweet-alert": "^7.3",
+        "vinkla/hashids": "^11.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",

@@ -260,9 +260,53 @@
                                             <span class="menu-title">Dashboard</span>
                                         </span>
                                     </div>
+
+                                    <!-- Users -->
+                                    @if (Auth::user()->rol === 'admin')
                                     <div class="menu-item pt-5">
                                         <div class="menu-content">
-                                            <span class="menu-heading fw-bold text-uppercase fs-7">Reportes</span>
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Mis Usuarios</span>
+                                        </div>
+                                    </div>
+                                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                        data-kt-menu-placement="right-start"
+                                        class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention">
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="ki-duotone ki-faceid fs-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                            </span>
+                                            <span class="menu-title">Usuarios</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-2 py-4 w-200px mh-75 overflow-auto">
+                                            <div class="menu-item">
+                                                <a class="menu-link" href="{{ route('users.adminusers') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Administrar Usuarios</span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item">
+                                                <a class="menu-link" href="{{ route('users.newuser') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Nuevo Usuario</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    <!-- End Users -->
+
+                                    <!-- Report -->
+                                    <div class="menu-item pt-5">
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Mis Reportes</span>
                                         </div>
                                     </div>
                                     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
@@ -298,6 +342,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- End Report -->
                                 </div>
                             </div>
                         </div>
@@ -341,20 +386,9 @@
     <script src="{{ asset('plugins/custom/vis-timeline/vis-timeline.bundle.js') }}"></script>
     <script src="{{ asset('js/widgets.bundle.js') }}"></script>
     <script src="{{ asset('js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-project/type.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-project/budget.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-project/settings.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-project/team.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-project/targets.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-project/files.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-project/complete.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-project/main.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/new-address.js') }}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/users-search.js') }}"></script>
-    <script src="{{ asset('js/custom/apps/support-center/tickets/create.js') }}"></script>
+    <script src="{{ asset('js/custom/apps/form/tickets/create.js') }}"></script>
+    <script src="{{ asset('js/custom/user/createuser/createuser.js') }}"></script>
+    <script src="{{ asset('js/custom/user/edituser/edituser.js') }}"></script>
     <script src="{{ asset('js/custom/authentication/reset-password/reset-password.js') }}"></script>
     <script src="{{ asset('js/custom/authentication/reset-password/new-password.js') }}"></script>
 

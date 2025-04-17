@@ -6,18 +6,17 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\AdminUsersController;
 
 /*
 |--------------------------------------------------------------------------
-| Rutas públicas (no requieren autenticación)
+| Rutas públicas
 |--------------------------------------------------------------------------
 */
 
-// Login
 Route::get('/', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 
-// Logout
 Route::post('/logout', function () {
     Auth::logout();
     return redirect()->route('login');
@@ -42,7 +41,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/newreport', [DashboardController::class, 'newreport'])->name('report.newreport');
     Route::get('/adminreport', [DashboardController::class, 'adminreport'])->name('report.adminreport');
     Route::get('/report', [ReportController::class, 'report'])->name('report.viewreport');
-
+    
     // Subida de evidencias
     Route::post('/upload-evidencias', [FileController::class, 'upload'])->name('files.upload');
+
+    // Crear y administrar usuarios
+    Route::get('/adminusers', [AdminUsersController::class, 'index'])->name('users.adminusers');
+    Route::get('/adminusers/create', [AdminUsersController::class, 'create'])->name('users.newuser');
+    Route::post('/adminusers', [AdminUsersController::class, 'store'])->name('users.store');
+    Route::get('/adminusers/{id}/edit', [AdminUsersController::class, 'edit'])->name('users.edit');
+    Route::put('/adminusers/{id}', [AdminUsersController::class, 'update'])->name('users.update');
+    Route::delete('/adminusers/{id}', [AdminUsersController::class, 'destroy'])->name('users.destroy');
 });
