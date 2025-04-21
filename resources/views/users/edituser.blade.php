@@ -25,7 +25,7 @@
             <!-- Formulario -->
             <div class="card mb-5">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('users.update', $user->id) }}" id="editUserForm">
+                    <form method="POST" action="{{ route('users.update', $user->hashid) }}" id="editUserForm">
                         @csrf
                         @method('PUT')
 
@@ -73,7 +73,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

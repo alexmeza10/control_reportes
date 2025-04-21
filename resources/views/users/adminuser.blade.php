@@ -74,12 +74,12 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ route('users.edit', $user->id) }}"
+                                                <a href="{{ route('users.edit', $user->hashid) }}"
                                                     class="btn btn-sm btn-warning me-1">
                                                     <i class="ki-duotone ki-pencil fs-5"></i> Editar
                                                 </a>
                                                 @if ($user->activo)
-                                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                    <form action="{{ route('users.destroy', $user->hashid) }}" method="POST"
                                                         class="d-inline form-deactivate">
                                                         @csrf
                                                         @method('DELETE')

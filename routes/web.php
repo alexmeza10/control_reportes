@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/adminusers', [AdminUsersController::class, 'index'])->name('users.adminusers');
     Route::get('/adminusers/create', [AdminUsersController::class, 'create'])->name('users.newuser');
     Route::post('/adminusers', [AdminUsersController::class, 'store'])->name('users.store');
-    Route::get('/adminusers/{id}/edit', [AdminUsersController::class, 'edit'])->name('users.edit');
-    Route::put('/adminusers/{id}', [AdminUsersController::class, 'update'])->name('users.update');
-    Route::delete('/adminusers/{id}', [AdminUsersController::class, 'destroy'])->name('users.destroy');
+    Route::get('/adminusers/{hashid}/edit', [AdminUsersController::class, 'edit'])->name('users.edit');
+    Route::put('/adminusers/{hashid}', [AdminUsersController::class, 'update'])->name('users.update');
+    Route::delete('/adminusers/{hashid}', [AdminUsersController::class, 'destroy'])->name('users.destroy');
 });

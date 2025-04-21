@@ -35,7 +35,7 @@ return [
         ],
 
         'alternative' => [
-            'salt' => 'your-salt-string',
+            'salt' => env('HASHIDS_SALT', 'rwDsgFI47h0QU9TntnpVZ5R4IBMtftUI'),
             'length' => 'your-length-integer',
             // 'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
         ],
