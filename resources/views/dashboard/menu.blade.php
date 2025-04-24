@@ -222,6 +222,7 @@
             <!-- End Calendario -->
             <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
                 <!-- Card Grafic -->
+                @if (Auth::user()->rol === 'admin')
                 <div class="col-xl-4">
                     <div class="card card-flush h-md-100">
                         <div class="card-header pt-5 mb-6">
@@ -331,8 +332,10 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <!-- End Card Grafic -->
                 <!-- Card from users -->
+                @if (Auth::user()->rol === 'admin')
                 <div class="col-xl-8">
                     <div class="card card-flush h-md-100">
                         <div class="card-header pt-7">
@@ -469,13 +472,14 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <!-- End Card from users -->
             </div>
         </div>
     </div>
     <!-- Up Button Page-->
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
-        <i class="ki-duotone ki-arrow-up">
+        <i class="ki-duotone ki-black-up">
             <span class="path1"></span>
             <span class="path2"></span>
         </i>

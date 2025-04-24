@@ -5,6 +5,7 @@
 <head>
     <title>Dashboard</title>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('media/logos/favicon.png') }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -389,6 +390,8 @@
     <script src="{{ asset('js/custom/apps/form/tickets/create.js') }}"></script>
     <script src="{{ asset('js/custom/user/createuser/createuser.js') }}"></script>
     <script src="{{ asset('js/custom/user/edituser/edituser.js') }}"></script>
+    <script src="{{ asset('js/custom/form/tickets/create.js') }}"></script>
+    <script src="{{ asset('js/custom/form/tickets/view.js') }}"></script>
     <script src="{{ asset('js/custom/authentication/reset-password/reset-password.js') }}"></script>
     <script src="{{ asset('js/custom/authentication/reset-password/new-password.js') }}"></script>
 

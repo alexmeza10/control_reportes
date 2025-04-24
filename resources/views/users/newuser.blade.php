@@ -89,11 +89,6 @@
                         </form>
                     </div>
                 </div>
-
-                <!-- Overlay de carga -->
-                <div id="loadingOverlay" class="d-none"
-                    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;">
                     <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
                         <span class="visually-hidden">Cargando...</span>
                     </div>

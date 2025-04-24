@@ -1,156 +1,238 @@
 "use strict";
-var KTModalNewTicket = (function () {
-    var t, e, n, i, o, a;
+
+var KTFormTicket = (function () {
+    var form, modal, submitButton, cancelButton, validation, dropzone;
+    var notificationSection, emailField;
+
     return {
         init: function () {
-            (a = document.querySelector("#kt_modal_new_ticket")) &&
-                ((o = new bootstrap.Modal(a)),
-                (i = document.querySelector("#kt_modal_new_ticket_form")),
-                (t = document.getElementById("kt_modal_new_ticket_submit")),
-                (e = document.getElementById("kt_modal_new_ticket_cancel")),
-                new Dropzone("#kt_modal_create_ticket_attachments", {
-                    url: "https://keenthemes.com/scripts/void.php",
-                    paramName: "file",
-                    maxFiles: 10,
-                    maxFilesize: 10,
-                    addRemoveLinks: !0,
-                    accept: function (t, e) {
-                        "justinbieber.jpg" == t.name
-                            ? e("Naha, you don't.")
-                            : e();
-                    },
-                }),
-                $(i.querySelector('[name="due_date"]')).flatpickr({
-                    enableTime: !0,
-                    dateFormat: "d, M Y, H:i",
-                }),
-                $(i.querySelector('[name="user"]')).on("change", function () {
-                    n.revalidateField("user");
-                }),
-                $(i.querySelector('[name="status"]')).on("change", function () {
-                    n.revalidateField("status");
-                }),
-                (n = FormValidation.formValidation(i, {
-                    fields: {
-                        subject: {
-                            validators: {
-                                notEmpty: {
-                                    message: "Ticket subject is required",
-                                },
-                            },
-                        },
-                        user: {
-                            validators: {
-                                notEmpty: {
-                                    message: "Ticket user is required",
-                                },
-                            },
-                        },
-                        due_date: {
-                            validators: {
-                                notEmpty: {
-                                    message: "Ticket due date is required",
-                                },
-                            },
-                        },
-                        description: {
-                            validators: {
-                                notEmpty: {
-                                    message: "Target description is required",
-                                },
-                            },
-                        },
-                        "notifications[]": {
-                            validators: {
-                                notEmpty: {
-                                    message:
-                                        "Please select at least one notifications method",
-                                },
-                            },
-                        },
-                    },
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        bootstrap: new FormValidation.plugins.Bootstrap5({
-                            rowSelector: ".fv-row",
-                            eleInvalidClass: "",
-                            eleValidClass: "",
-                        }),
-                    },
-                })),
-                t.addEventListener("click", function (e) {
-                    e.preventDefault(),
-                        n &&
-                            n.validate().then(function (e) {
-                                console.log("validated!"),
-                                    "Valid" == e
-                                        ? (t.setAttribute(
-                                              "data-kt-indicator",
-                                              "on"
-                                          ),
-                                          (t.disabled = !0),
-                                          setTimeout(function () {
-                                              t.removeAttribute(
-                                                  "data-kt-indicator"
-                                              ),
-                                                  (t.disabled = !1),
-                                                  Swal.fire({
-                                                      text: "Form has been successfully submitted!",
-                                                      icon: "success",
-                                                      buttonsStyling: !1,
-                                                      confirmButtonText:
-                                                          "Ok, got it!",
-                                                      customClass: {
-                                                          confirmButton:
-                                                              "btn btn-primary",
-                                                      },
-                                                  }).then(function (t) {
-                                                      t.isConfirmed && o.hide();
-                                                  });
-                                          }, 2e3))
-                                        : Swal.fire({
-                                              text: "Sorry, looks like there are some errors detected, please try again.",
-                                              icon: "error",
-                                              buttonsStyling: !1,
-                                              confirmButtonText: "Ok, got it!",
-                                              customClass: {
-                                                  confirmButton:
-                                                      "btn btn-primary",
-                                              },
-                                          });
-                            });
-                }),
-                e.addEventListener("click", function (t) {
-                    t.preventDefault(),
+            modal = document.querySelector("#kt_modal_new_ticket");
+            form = document.querySelector("#kt_modal_new_ticket_form");
+            submitButton = document.querySelector(
+                "#kt_modal_new_ticket_submit"
+            );
+            cancelButton = document.querySelector(
+                "#kt_modal_new_ticket_cancel"
+            );
+            emailField = document.getElementById("emailField");
+            notificationSection = document.getElementById(
+                "notification-section"
+            );
+
+            // Dropzone
+            dropzone = new Dropzone("#evidencias-upload", {
+                url: "/upload-evidencias",
+                maxFiles: 10,
+                maxFilesize: 10,
+                acceptedFiles: ".pdf,.jpg,.jpeg,.png",
+                addRemoveLinks: true,
+                dictDefaultMessage:
+                    "Arrastra los archivos aquí o haz clic para subir.",
+                dictRemoveFile: "Eliminar archivo",
+                init: function () {
+                    this.on("success", function (file, response) {
+                        console.log("Archivo subido exitosamente", response);
+                    });
+                    this.on("error", function (file, errorResponse) {
+                        console.error("Error al subir archivo:", errorResponse);
                         Swal.fire({
-                            text: "Are you sure you would like to cancel?",
-                            icon: "warning",
-                            showCancelButton: !0,
-                            buttonsStyling: !1,
-                            confirmButtonText: "Yes, cancel it!",
-                            cancelButtonText: "No, return",
+                            text:
+                                errorResponse.message ||
+                                "Hubo un error al subir el archivo.",
+                            icon: "error",
+                            confirmButtonText: "Entendido",
+                            customClass: { confirmButton: "btn btn-primary" },
+                        });
+                        this.removeFile(file);
+                    });
+                },
+            });
+
+            // FormValidation
+            validation = FormValidation.formValidation(form, {
+                fields: {
+                    nombre: {
+                        validators: {
+                            notEmpty: {
+                                message:
+                                    "El nombre del solicitante es obligatorio",
+                            },
+                        },
+                    },
+                    dependencia: {
+                        validators: {
+                            notEmpty: {
+                                message: "La dirección o unidad es obligatoria",
+                            },
+                        },
+                    },
+                    ext: {
+                        validators: {
+                            notEmpty: {
+                                message:
+                                    "El contacto del solicitante es obligatorio",
+                            },
+                            numeric: {
+                                message:
+                                    "El contacto debe ser un número válido",
+                            },
+                        },
+                    },
+                    mail: {
+                        validators: {
+                            regexp: {
+                                regexp: /^[^@\s]+@zapopan.gob.mx$/,
+                                message:
+                                    "El correo debe ser del dominio zapopan.gob.mx",
+                            },
+                        },
+                    },
+                    num_empleado: {
+                        validators: {
+                            numeric: {
+                                message:
+                                    "El número de empleado debe ser un valor numérico",
+                            },
+                        },
+                    },
+                    subject: {
+                        validators: {
+                            notEmpty: { message: "El asunto es obligatorio" },
+                        },
+                    },
+                    description: {
+                        validators: {
+                            notEmpty: {
+                                message: "La descripción es obligatoria",
+                            },
+                        },
+                    },
+                    notifications: {
+                        validators: {
+                            notEmpty: {
+                                message:
+                                    "Selecciona una opción de notificación",
+                            },
+                        },
+                    },
+                    status: {
+                        validators: {
+                            notEmpty: {
+                                message:
+                                    "Selecciona un estatus para el reporte",
+                            },
+                        },
+                    },
+                    ubicacion: {
+                        validators: {
+                            notEmpty: {
+                                message:
+                                    "Ingresa la ubicación donde se atiende el reporte",
+                            },
+                        },
+                    },
+                    evidencias: {
+                        validators: {
+                            callback: {
+                                message: "Por favor, sube al menos un archivo.",
+                                callback: function () {
+                                    return dropzone.files.length > 0;
+                                },
+                            },
+                        },
+                    },
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: ".fv-row",
+                        eleInvalidClass: "",
+                        eleValidClass: "",
+                    }),
+                },
+            });
+
+            // Mostrar sección notificación al detectar email válido
+            if (emailField) {
+                emailField.addEventListener("input", function () {
+                    const emailValue = emailField.value.trim();
+                    if (emailValue.endsWith("@zapopan.gob.mx")) {
+                        notificationSection.style.display = "block";
+                    } else {
+                        notificationSection.style.display = "none";
+                    }
+                });
+            }
+
+            // Submit
+            submitButton.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                validation.validate().then(function (status) {
+                    if (status === "Valid") {
+                        submitButton.setAttribute("data-kt-indicator", "on");
+                        submitButton.disabled = true;
+
+                        setTimeout(function () {
+                            submitButton.removeAttribute("data-kt-indicator");
+                            submitButton.disabled = false;
+
+                            Swal.fire({
+                                text: "¡Formulario enviado con éxito!",
+                                icon: "success",
+                                confirmButtonText: "Entendido",
+                                customClass: {
+                                    confirmButton: "btn btn-primary",
+                                },
+                            }).then(function () {
+                                if (modal) {
+                                    bootstrap.Modal.getInstance(modal).hide();
+                                }
+                            });
+                        }, 2000);
+                    } else {
+                        Swal.fire({
+                            text: "Por favor, revisa los errores en el formulario e inténtalo nuevamente.",
+                            icon: "error",
+                            confirmButtonText: "Entendido",
                             customClass: {
                                 confirmButton: "btn btn-primary",
-                                cancelButton: "btn btn-active-light",
                             },
-                        }).then(function (t) {
-                            t.value
-                                ? (i.reset(), o.hide())
-                                : "cancel" === t.dismiss &&
-                                  Swal.fire({
-                                      text: "Your form has not been cancelled!.",
-                                      icon: "error",
-                                      buttonsStyling: !1,
-                                      confirmButtonText: "Ok, got it!",
-                                      customClass: {
-                                          confirmButton: "btn btn-primary",
-                                      },
-                                  });
                         });
-                }));
+                    }
+                });
+            });
+
+            // Cancel
+            cancelButton.addEventListener("click", function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    text: "¿Estás seguro de que deseas cancelar?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Sí, cancelar",
+                    cancelButtonText: "No, regresar",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-active-light",
+                    },
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        form.reset();
+                        if (notificationSection) {
+                            notificationSection.style.display = "none";
+                        }
+                        if (modal) {
+                            bootstrap.Modal.getInstance(modal).hide();
+                        }
+                    }
+                });
+            });
         },
     };
 })();
+
+// Ejecutar cuando el DOM esté listo
 KTUtil.onDOMContentLoaded(function () {
-    KTModalNewTicket.init();
+    KTFormTicket.init();
 });

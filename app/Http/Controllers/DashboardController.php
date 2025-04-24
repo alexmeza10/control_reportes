@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Report;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -22,7 +24,13 @@ class DashboardController extends Controller
 
     public function adminreport()
     {
-        return view('report.adminreport');
+        $userId = Auth::id();
+    
+        $reportes = Report::where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    
+        return view('users.adminreport', compact('reportes'));
     }
 
 

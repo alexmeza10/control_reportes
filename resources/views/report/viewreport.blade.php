@@ -202,17 +202,17 @@
             const modalPreviewMessage = document.getElementById('modalPreviewMessage');
 
             previewModal.addEventListener('show.bs.modal', function(event) {
-                const triggerElement = event.relatedTarget; // El elemento que disparó el modal
-                const filePath = triggerElement.getAttribute('data-img-src'); // Ruta del archivo
+                const triggerElement = event.relatedTarget; 
+                const filePath = triggerElement.getAttribute('data-img-src');
 
                 if (filePath.endsWith('.pdf')) {
-                    // Mostrar un mensaje para PDFs
+
                     modalPreviewImage.setAttribute('src', '{{ asset('media/svg/files/pdf.svg') }}');
                     modalPreviewMessage.textContent = `Este es un archivo PDF: ${filePath}`;
                 } else {
-                    // Mostrar imagen para otros archivos
+
                     modalPreviewImage.setAttribute('src', filePath);
-                    modalPreviewMessage.textContent = ''; // Sin mensaje adicional
+                    modalPreviewMessage.textContent = ''; 
                 }
             });
         });

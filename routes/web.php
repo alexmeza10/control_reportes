@@ -37,11 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfil', [DashboardController::class, 'adminuser'])->name('profile.adminuser');
     Route::post('/update-password', [AuthController::class, 'updatePassword'])->name('password.update');
 
-    // Administración de reportes
-    Route::get('/newreport', [DashboardController::class, 'newreport'])->name('report.newreport');
-    Route::get('/adminreport', [DashboardController::class, 'adminreport'])->name('report.adminreport');
-    Route::get('/report', [ReportController::class, 'report'])->name('report.viewreport');
-    
+    // Administración de reportes del usuario autenticado
+    Route::get('/reportes', [ReportController::class, 'index'])->name('report.adminreport');
+    Route::get('/report/create', [ReportController::class, 'create'])->name('report.create');
+    Route::post('/report', [ReportController::class, 'store'])->name('report.store'); 
+    Route::get('/report/{hashid}', [ReportController::class, 'show'])->name('report.view'); 
+    Route::get('/report/{hashid}/edit', [ReportController::class, 'edit'])->name('report.edit');
+    Route::put('/report/{hashid}', [ReportController::class, 'update'])->name('report.update');
+
     // Subida de evidencias
     Route::post('/upload-evidencias', [FileController::class, 'upload'])->name('files.upload');
 

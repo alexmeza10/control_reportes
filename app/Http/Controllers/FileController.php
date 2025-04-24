@@ -9,9 +9,9 @@ class FileController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:10240', // Máx. 10 MB
+            'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:10240',
         ]);
-    
+        
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = time() . '_' . $file->getClientOriginalName();

@@ -36,7 +36,7 @@
                         @endif
 
                         <!-- Botón flotante -->
-                        <a href="{{ route('users.newuser') }}" class="btn btn-primary btn-icon position-fixed"
+                        <a href="{{ route('users.newuser') }}" class="btn btn-warning btn-icon position-fixed"
                             data-bs-toggle="tooltip" data-bs-placement="left" title="Nuevo Usuario"
                             style="bottom: 30px; right: 30px; z-index: 1050; padding: 15px; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                             <i class="ki-duotone ki-plus fs-2x"></i>

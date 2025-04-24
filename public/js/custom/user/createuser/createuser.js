@@ -86,7 +86,8 @@ var KTCreateUser = (function () {
                     submitButton.disabled = true;
 
                     // Mostrar el overlay al iniciar el envío
-                    document.getElementById("loadingOverlay").style.display = "flex";
+                    document.getElementById("loadingOverlay").style.display =
+                        "flex";
 
                     axios
                         .post(form.getAttribute("action"), new FormData(form))
@@ -117,7 +118,9 @@ var KTCreateUser = (function () {
                         })
                         .finally(() => {
                             // Ocultar overlay al finalizar
-                            document.getElementById("loadingOverlay").style.display = "none";
+                            document.getElementById(
+                                "loadingOverlay"
+                            ).style.display = "none";
 
                             submitButton.removeAttribute("data-kt-indicator");
                             submitButton.disabled = false;
