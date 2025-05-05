@@ -141,7 +141,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Input oculto para archivos (por si se usa directamente en el submit) -->
                                     <input type="file" name="evidencias[]" id="evidencias" multiple hidden>
                                 </div>
                                 <!--End Images-->
@@ -157,7 +156,7 @@
                                         <div class="d-flex align-items-center">
                                             <label class="form-check form-check-custom form-check-solid me-10">
                                                 <input class="form-check-input h-20px w-20px" type="radio"
-                                                    name="notifications" value="1" checked />
+                                                    name="notifications" value="1" />
                                                 <span class="form-check-label fw-semibold">Sí</span>
                                             </label>
                                             <label class="form-check form-check-custom form-check-solid">
@@ -204,21 +203,32 @@
 
             // Dropzone
             const evidenciasDropzone = new Dropzone("#evidencias-upload", {
-                url: "/upload-evidencias", // Ruta que tú manejes para la subida temporal
+                url: "/upload-evidencias",
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
                         'content')
                 },
                 maxFiles: 10,
-                maxFilesize: 10,
+                maxFilesize: 10, // en MB
                 acceptedFiles: ".pdf,.jpg,.jpeg,.png",
                 addRemoveLinks: true,
                 autoProcessQueue: false,
                 dictDefaultMessage: "Arrastra los archivos aquí o haz clic para subir.",
                 dictRemoveFile: "Eliminar archivo",
                 init: function() {
+                    console.log("Dropzone inicializado correctamente.");
+
+                    this.on("addedfile", function(file) {
+                        console.log("Archivo añadido:", file);
+                    });
+
                     this.on("successmultiple", function(files, response) {
+                        console.log("Carga exitosa de múltiples archivos:", files, response);
                         mostrarMensajeExito();
+                    });
+
+                    this.on("success", function(file, response) {
+                        console.log("Carga exitosa de archivo:", file, response);
                     });
 
                     this.on("error", function(file, errorResponse) {
@@ -235,10 +245,19 @@
                         this.removeFile(file);
                     });
 
+                    this.on("sending", function(file, xhr, formData) {
+                        console.log("Enviando archivo:", file);
+                    });
+
                     this.on("queuecomplete", function() {
+                        console.log(
+                            "Todos los archivos fueron procesados. Enviando formulario...");
                         form.submit();
                     });
                 },
+            });
+            evidenciasDropzone.on("addedfile", function(file) {
+                console.log("Archivo añadido a Dropzone:", file);
             });
 
             // Validación

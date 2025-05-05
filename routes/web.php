@@ -7,6 +7,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\CorreoController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,12 +41,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/update-password', [AuthController::class, 'updatePassword'])->name('password.update');
 
     // Administración de reportes del usuario autenticado
+    Route::get('/newreport', [ReportController::class, 'newreport'])->name('report.newreport');
+    Route::get('/adminreport', [ReportController::class, 'adminreport'])->name('report.adminreport');
     Route::get('/reportes', [ReportController::class, 'index'])->name('report.adminreport');
     Route::get('/report/create', [ReportController::class, 'create'])->name('report.create');
-    Route::post('/report', [ReportController::class, 'store'])->name('report.store'); 
-    Route::get('/report/{hashid}', [ReportController::class, 'show'])->name('report.view'); 
+    Route::post('/report', [ReportController::class, 'store'])->name('report.store');
     Route::get('/report/{hashid}/edit', [ReportController::class, 'edit'])->name('report.edit');
     Route::put('/report/{hashid}', [ReportController::class, 'update'])->name('report.update');
+    Route::get('/report/{hashid}', [ReportController::class, 'show'])->name('report.show');
 
     // Subida de evidencias
     Route::post('/upload-evidencias', [FileController::class, 'upload'])->name('files.upload');

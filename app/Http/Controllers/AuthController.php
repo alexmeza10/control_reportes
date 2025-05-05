@@ -62,7 +62,7 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $user->password = Hash::make($request->new_password);
-        $user->save();  
+        $user->save();
 
         // Cierra sesiones en otros dispositivos tras cambiar la contraseña
         Auth::logoutOtherDevices($request->new_password);
