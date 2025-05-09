@@ -112,9 +112,11 @@
                                                         </div>
                                                     @endforeach
                                                 </div>
-                                                <div class="d-flex justify-content-center">
-                                                    {{ $reportes->links('vendor.pagination.bootstrap-5') }}
-                                                </div>
+                                                @if ($reportes->hasPages())
+                                                    <div class="d-flex justify-content-center">
+                                                        {{ $reportes->links('vendor.pagination.bootstrap-5') }}
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

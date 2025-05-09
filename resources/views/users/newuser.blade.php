@@ -11,8 +11,8 @@
                 <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                         <div class="mb-13 text-justify">
-                            <h1 class="text-dark fw-bold my-1 fs-3">Crear Usuario</h1>
-                            <span class="text-muted fw-semibold fs-6">
+                            <h1 class="mb-3">Crear Usuario</h1>
+                            <span class="text-gray-500 fw-semibold fs-5">
                                 Control de Reportes en la Unidad de Redes y Telecomunicaciones
                             </span>
                         </div>
@@ -89,13 +89,13 @@
                         </form>
                     </div>
                 </div>
-                    <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
-                        <span class="visually-hidden">Cargando...</span>
-                    </div>
-                    <div class="text-white mt-3 fs-4 fw-semibold">Guardando...</div>
+                <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Cargando...</span>
                 </div>
-
+                <div class="text-white mt-3 fs-4 fw-semibold">Guardando...</div>
             </div>
+
         </div>
+    </div>
     </div>
 @endsection

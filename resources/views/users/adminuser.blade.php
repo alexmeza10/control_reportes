@@ -64,7 +64,8 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->extension }}</td>
                                             <td>
-                                                <span class="badge bg-{{ $user->rol === 'admin' ? 'success' : 'secondary' }}">
+                                                <span
+                                                    class="badge bg-{{ $user->rol === 'admin' ? 'success' : 'secondary' }}">
                                                     {{ ucfirst($user->rol) }}
                                                 </span>
                                             </td>
@@ -79,16 +80,19 @@
                                                     <i class="ki-duotone ki-pencil fs-5"></i> Editar
                                                 </a>
                                                 @if ($user->activo)
-                                                    <form action="{{ route('users.destroy', $user->hashid) }}" method="POST"
-                                                        class="d-inline form-deactivate">
+                                                    <form action="{{ route('users.destroy', $user->hashid) }}"
+                                                        method="POST" class="d-inline form-deactivate">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="button" class="btn btn-sm btn-danger btn-confirm-deactivate" data-kt-indicator="">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-danger btn-confirm-deactivate"
+                                                            data-kt-indicator="">
                                                             <span class="indicator-label">
                                                                 <i class="ki-duotone ki-user-minus fs-5"></i> Desactivar
                                                             </span>
                                                             <span class="indicator-progress">
-                                                                Desactivando... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                                Desactivando... <span
+                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                                             </span>
                                                         </button>
                                                     </form>
@@ -114,11 +118,11 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const deactivateButtons = document.querySelectorAll('.btn-confirm-deactivate');
 
             deactivateButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     const form = this.closest('.form-deactivate');
                     const submitButton = this;
 

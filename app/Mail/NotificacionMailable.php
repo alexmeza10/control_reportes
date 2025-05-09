@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class NotificacionMailable extends Mailable
 {
@@ -19,8 +20,11 @@ class NotificacionMailable extends Mailable
 
     public function build()
     {
+        $user = Auth::user();
+
         return $this->subject($this->data['subject'])
             ->view('mail.notificacion')
-            ->with($this->data);
+            ->with($this->data)
+            ->bcc($user->email);
     }
 }
