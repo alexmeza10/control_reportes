@@ -14,9 +14,9 @@ var KTCreateUser = (function () {
                             message: "El nombre es requerido",
                         },
                         regexp: {
-                            regexp: /^[A-Za-zÁÉÍÓÚáéíóú\s]+$/,
+                            regexp: /^[A-Za-zÁÉÍÓÚáéíóú]+(?:\s[A-Za-zÁÉÍÓÚáéíóú]+)*$/,
                             message:
-                                "El nombre solo puede contener letras y espacios",
+                                "El nombre solo puede contener letras y espacios (sin múltiples espacios consecutivos)",
                         },
                     },
                 },
@@ -26,9 +26,9 @@ var KTCreateUser = (function () {
                             message: "El usuario es requerido",
                         },
                         regexp: {
-                            regexp: /^[A-Za-z]+$/,
+                            regexp: /^[a-zA-Z0-9_.]+$/,
                             message:
-                                "El usuario solo puede contener letras sin espacios ni acentos",
+                                "El usuario solo puede contener letras, números, guiones bajos o puntos",
                         },
                     },
                 },
@@ -82,49 +82,73 @@ var KTCreateUser = (function () {
 
             validator.validate().then(function (status) {
                 if (status === "Valid") {
-                    submitButton.setAttribute("data-kt-indicator", "on");
-                    submitButton.disabled = true;
+                    Swal.fire({
+                        title: "¿Crear usuario?",
+                        text: "Se registrará un nuevo usuario en el sistema.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Sí, crear",
+                        cancelButtonText: "Cancelar",
+                        customClass: {
+                            confirmButton: "btn btn-primary",
+                            cancelButton: "btn btn-secondary",
+                        },
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const overlay =
+                                document.getElementById("loadingOverlay");
+                            if (overlay) overlay.style.display = "block";
 
-                    // Mostrar el overlay al iniciar el envío
-                    document.getElementById("loadingOverlay").style.display =
-                        "flex";
+                            submitButton.setAttribute(
+                                "data-kt-indicator",
+                                "on"
+                            );
+                            submitButton.disabled = true;
 
-                    axios
-                        .post(form.getAttribute("action"), new FormData(form))
-                        .then(function (response) {
-                            Swal.fire({
-                                text: "El usuario ha sido creado correctamente.",
-                                icon: "success",
-                                confirmButtonText: "Entendido",
-                                customClass: {
-                                    confirmButton: "btn btn-primary",
-                                },
-                            }).then(() => {
-                                window.location.href = "/adminusers";
-                            });
-                        })
-                        .catch(function (error) {
-                            let message =
-                                error.response?.data?.message ||
-                                "Ha ocurrido un error.";
-                            Swal.fire({
-                                text: message,
-                                icon: "error",
-                                confirmButtonText: "Intentar de nuevo",
-                                customClass: {
-                                    confirmButton: "btn btn-primary",
-                                },
-                            });
-                        })
-                        .finally(() => {
-                            // Ocultar overlay al finalizar
-                            document.getElementById(
-                                "loadingOverlay"
-                            ).style.display = "none";
+                            axios
+                                .post(
+                                    form.getAttribute("action"),
+                                    new FormData(form)
+                                )
+                                .then(function () {
+                                    Swal.fire({
+                                        text: "El usuario ha sido creado correctamente.",
+                                        icon: "success",
+                                        confirmButtonText: "Entendido",
+                                        customClass: {
+                                            confirmButton: "btn btn-primary",
+                                        },
+                                    }).then(() => {
+                                        window.location.href = "/adminusers";
+                                    });
+                                })
+                                .catch(function (error) {
+                                    let message =
+                                        error.response?.data?.message ||
+                                        "Ha ocurrido un error.";
+                                    Swal.fire({
+                                        text: message,
+                                        icon: "error",
+                                        confirmButtonText: "Intentar de nuevo",
+                                        customClass: {
+                                            confirmButton: "btn btn-primary",
+                                        },
+                                    });
+                                })
+                                .finally(() => {
+                                    const overlay =
+                                        document.getElementById(
+                                            "loadingOverlay"
+                                        );
+                                    if (overlay) overlay.style.display = "none";
 
-                            submitButton.removeAttribute("data-kt-indicator");
-                            submitButton.disabled = false;
-                        });
+                                    submitButton.removeAttribute(
+                                        "data-kt-indicator"
+                                    );
+                                    submitButton.disabled = false;
+                                });
+                        }
+                    });
                 } else {
                     Swal.fire({
                         text: "Parece que hay algunos errores. Por favor revisa e intenta de nuevo.",

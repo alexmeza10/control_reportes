@@ -19,7 +19,7 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'encrypt' => 'no',
-            'trust_server_certificate' => true,
+            'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
     ],

@@ -23,10 +23,9 @@
 
             <div id="kt_app_content_container" class="app-container container-xxl">
 
-                <!-- Formulario -->
+                <!-- Form -->
                 <div class="card mb-5">
                     <div class="card-body">
-                        {{-- Mensaje de éxito --}}
                         @if (session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
@@ -84,18 +83,20 @@
                             </div>
 
                             <div class="text-end">
-                                <button id="submitUserBtn" type="submit" class="btn btn-warning">Crear Usuario</button>
+                                <button id="submitUserBtn" type="button" class="btn btn-warning">Crear Usuario</button>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
-                    <span class="visually-hidden">Cargando...</span>
+                <!-- End Form -->
+                <div id="loadingOverlay" style="display: none;" class="text-center">
+                    <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <div class="text-dark mt-3 fs-4 fw-semibold">Guardando...</div>
                 </div>
-                <div class="text-white mt-3 fs-4 fw-semibold">Guardando...</div>
-            </div>
 
+            </div>
         </div>
-    </div>
     </div>
 @endsection

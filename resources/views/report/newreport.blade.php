@@ -196,12 +196,10 @@
             const notificationSection = document.getElementById("notification-section");
             const mailField = document.querySelector("input[name='mail']");
 
-            // Mostrar notificación si se escribe un correo
             mailField.addEventListener("input", function() {
                 notificationSection.style.display = this.value.trim() ? "block" : "none";
             });
 
-            // Dropzone
             const evidenciasDropzone = new Dropzone("#evidencias-upload", {
                 url: "/upload-evidencias",
                 headers: {
@@ -260,7 +258,6 @@
                 console.log("Archivo añadido a Dropzone:", file);
             });
 
-            // Validación
             const validation = FormValidation.formValidation(form, {
                 fields: {
                     nombre: {
@@ -342,7 +339,6 @@
                 },
             });
 
-            // Envío del formulario
             submitButton.addEventListener("click", function(e) {
                 e.preventDefault();
                 submitButton.disabled = true;
@@ -384,7 +380,6 @@
                 });
             }
 
-            // Cancelación
             cancelButton.addEventListener("click", function(e) {
                 e.preventDefault();
                 Swal.fire({
